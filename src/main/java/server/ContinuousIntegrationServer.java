@@ -35,7 +35,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                 Iterator<String> iterator = jsonObject.keys();
                 while (iterator.hasNext()) {
                     String key = iterator.next();
-                    System.out.println(key + ": " + jsonObject.get(key));
+                    System.out.println("\"" + key + "\": " + jsonObject.get(key));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
