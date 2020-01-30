@@ -32,11 +32,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
             String payload = IOUtils.toString(request.getReader());
             try {
                 JSONObject jsonObject = new JSONObject(payload);
-                Iterator<String> iterator = jsonObject.keys();
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    System.out.println("\"" + key + "\": " + jsonObject.get(key));
-                }
+                System.out.println(jsonObject.toString(4));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
