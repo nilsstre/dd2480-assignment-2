@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.*;
+import utilities.Helpers;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -39,12 +40,12 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                 logger.error("Server failed while parsing received payload", e);
             }
         }
-
-        response.getWriter().println("CI job done");
+        response.getWriter().println("CI job running");
     }
 
     // used to start the CI server in command line
     public static void main(String[] args) throws Exception {
+        Helpers.setUpConfiguration(args);
         Server server = new Server(8080);
         server.setHandler(new ContinuousIntegrationServer());
         server.start();
