@@ -2,7 +2,6 @@ package server;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 
 import java.io.IOException;
 
@@ -17,16 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import org.json.*;
 import utilities.Helpers;
 
-/**
- * Skeleton of a ContinuousIntegrationServer which acts as webhook
- * See the Jetty documentation for API documentation of those classes.
- */
 public class ContinuousIntegrationServer extends AbstractHandler {
     private static final Logger logger = Logger.getLogger(ContinuousIntegrationServer.class);
 
     @Override
     public void handle(String target, @NotNull Request baseRequest, @NotNull HttpServletRequest request, @NotNull HttpServletResponse response)
-            throws IOException, ServletException {
+            throws IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
@@ -43,7 +38,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         response.getWriter().println("CI job running");
     }
 
-    // used to start the CI server in command line
     public static void main(String[] args) throws Exception {
         Helpers.setUpConfiguration(args);
         Server server = new Server(8080);

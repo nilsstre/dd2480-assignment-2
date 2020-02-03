@@ -1,4 +1,4 @@
-package utilities;
+package ci;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
@@ -10,6 +10,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import org.apache.log4j.Logger;
+import utilities.Configuration;
+import utilities.Helpers;
 
 import java.io.File;
 import java.util.HashSet;
@@ -31,11 +33,11 @@ public class AWSFileUploader {
 
     public boolean uploadFile(final String fileName) {
         try {
-            final String folderFileName = "builds/" + fileName + ".txt";
+            final String folderFileName = "reports/" + fileName + ".txt";
             PutObjectRequest request = new PutObjectRequest(
                     Configuration.BUCKET_NAME,
                     folderFileName,
-                    new File("src/main/resources/git/reports/" + fileName)
+                    new File(Configuration.PATH_TO_REPORTS + fileName + ".txt")
             );
 
             ObjectMetadata metadata = new ObjectMetadata();
@@ -60,9 +62,8 @@ public class AWSFileUploader {
             final Set<String> reports = new HashSet<>();
             ObjectListing objectListing = s3Client.listObjects(Configuration.BUCKET_NAME);
             for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
-                if (objectSummary.getKey().matches("builds/\\w+[.]\\w+")) {
-                    reports.add(objectSummary.getKey().split("builds/")[1]);
-                    System.out.println(objectSummary.getKey().split("builds/")[1]);
+                if (objectSummary.getKey().matches("reports/[A-Za-z0-9_-]+.txt")) {
+                    reports.add(objectSummary.getKey().split("reports/")[1]);
                 }
             }
             return reports;

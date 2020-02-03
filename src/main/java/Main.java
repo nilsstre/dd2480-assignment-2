@@ -1,10 +1,14 @@
+import ci.GitRepositoryHandler;
+import ci.MavenRunner;
 import ci.ProjectTester;
+import utilities.Helpers;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            ProjectTester projectTester = new ProjectTester("webhook-test", "dd2480-assignment-2","master", "nils", "");
-            projectTester.processPush();
+            Helpers.setUpConfiguration(args);
+            GitRepositoryHandler gitRepositoryHandler = new GitRepositoryHandler("test", "webhook-test", "https://github.com/nilsstre/webhook-test.git");
+            gitRepositoryHandler.cloneRepository();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,9 +2,7 @@ package ci;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-import utilities.AWSFileUploader;
 import utilities.Helpers;
-import utilities.ScriptRunner;
 
 public class ProjectTester {
     private static final Logger logger = Logger.getLogger(ProjectTester.class);
@@ -33,20 +31,21 @@ public class ProjectTester {
         this.author = author;
         this.cloneURL = cloneURL;
         id = Helpers.generateId(headCommitId);
-        logger.info("Started test of repository: " + repositoryName + ", branch: " + branch + ", pushed by: " + author + ", id: " + headCommitId);
     }
 
     public void processPush() {
-        final long timeOut = 10000;
-        ScriptRunner scriptRunner = new ScriptRunner(id, repositoryName, branch, cloneURL);
+        logger.info("Started test of repository: " + repositoryName + ", branch: " + branch + ", pushed by: " + author + ", id: " + id);
+
         AWSFileUploader awsFileUploader = new AWSFileUploader();
+        MavenRunner mavenRunner = new MavenRunner(id, repositoryName);
+        GitRepositoryHandler gitRepositoryHandler = new GitRepositoryHandler(id, repositoryName, cloneURL);
 
         for (int i = 0; i < 3 && !cloned; i++) {
-            cloned = scriptRunner.cloneRepository(timeOut, false);
+            cloned = gitRepositoryHandler.cloneRepository();
         }
 
         for (int i = 0; i < 3 && cloned && !tested; i++) {
-            tested = scriptRunner.testProject(timeOut, false);
+            tested = mavenRunner.runProject();
         }
 
         if (tested) {
@@ -54,8 +53,7 @@ public class ProjectTester {
         }
 
         for (int i = 0; i < 3 && !cleanedUp; i++) {
-            cleanedUp = scriptRunner.cleanUpProject(timeOut, false);
+            //cleanedUp = Helpers.cleanUp(id);
         }
-
     }
 }
