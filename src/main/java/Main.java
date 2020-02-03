@@ -1,22 +1,14 @@
-import org.apache.log4j.BasicConfigurator;
-import utilities.ScriptRunner;
+import ci.GitRepositoryHandler;
+import ci.MavenRunner;
+import ci.ProjectTester;
+import utilities.Helpers;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            if (new ScriptRunner().cloneRepository()) {
-                if (new ScriptRunner().testProject()) {
-                    if (new ScriptRunner().cleanUpProject()) {
-                        System.out.println("Finished");
-                    } else {
-                        System.err.println("Failed to clean up the project");
-                    }
-                } else {
-                    System.err.println("Failed to test the project");
-                }
-            } else {
-                System.err.println("Failed to clone the project");
-            }
+            Helpers.setUpConfiguration(args);
+            GitRepositoryHandler gitRepositoryHandler = new GitRepositoryHandler("test", "webhook-test", "https://github.com/nilsstre/webhook-test.git");
+            gitRepositoryHandler.cloneRepository();
         } catch (Exception e) {
             e.printStackTrace();
         }

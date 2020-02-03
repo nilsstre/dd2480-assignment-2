@@ -1,2 +1,7 @@
-cd src/main/resources/git || exit
-git clone git@github.com:DD2480-Group-22/assignment-1.git
+cd src/main/resources/git || exit 1
+echo "$1"
+mkdir "$1"
+cd "$1" || exit 1
+git clone "$4"
+cd "$2" || 1
+git checkout "$3"

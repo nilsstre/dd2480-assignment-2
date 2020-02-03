@@ -1,3 +1,2 @@
-cd src/main/resources/git/assignment-1 || exit
-fileName="result_$(date +"%Y-%m-%d_%T")"
-mvn clean install > ../"$fileName"
+cd src/main/resources/git/"$1"/"$2" || exit 1
+mvn clean install > ../../reports/"$1"
