@@ -51,9 +51,6 @@ public class Helpers {
         AWSFileUploader awsFileUploader = new AWSFileUploader();
         Configuration.PREVIOUS_BUILDS = awsFileUploader.getReports();
 
-        System.out.println("AWS ACCESS KEY: " + Configuration.AWS_ACCESS_KEY_ID);
-        System.out.println("AWS SECRET KEY: " + Configuration.AWS_SECRET_KEY);
-
         if (Configuration.AWS_ACCESS_KEY_ID.isEmpty()) {
             throw new MissingResourceException("The AWS access key id is missing", "", "");
         } else if (Configuration.AWS_SECRET_KEY.isEmpty()){
