@@ -1,0 +1,2 @@
+# dd2480-assignment-2
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c77a847bb5724ca49b6166dd14b035ff)](https://app.codacy.com/manual/nilsstre/dd2480-assignment-2?utm_source=github.com&utm_medium=referral&utm_content=nilsstre/dd2480-assignment-2&utm_campaign=Badge_Grade_Settings)
